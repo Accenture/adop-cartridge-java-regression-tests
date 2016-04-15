@@ -43,26 +43,43 @@ public class Configure {
         {
             envPetclinicUrl = prop.getProperty("spring.petclinic.url");
         }
+        String zapEnabled = System.getProperty("ZAP_ENABLED");
+        if (zapEnabled == null)
+        {
+            zapEnabled = prop.getProperty("zap.enabled");
+        }
+        String zapPort = System.getProperty("ZAP_PORT");
+        if (zapPort == null)
+        {
+            zapPort = prop.getProperty("zap.port");
+        }
+        String zapIp = System.getProperty("ZAP_IP");
+        if (zapIp == null)
+        {
+            zapIp = prop.getProperty("zap.url");
+        }
+
         setPetClinicUrl(envPetclinicUrl);
-        setZapEnabled(Boolean.parseBoolean(prop.getProperty("zap.enabled")));
-        setZapIp(prop.getProperty("zap.url"));
-        setZapPort(Integer.parseInt(prop.getProperty("zap.port")));
+        setZapEnabled(Boolean.parseBoolean(zapEnabled));
+        setZapIp(zapIp);
+        setZapPort(Integer.parseInt(zapPort));
         setOwnerLastNameNotExist(prop.getProperty("test.data.owner1.not.exist.lastName"));
         setHubUrl(prop.getProperty("grid.hub.url"));
         setGridMode(Boolean.parseBoolean(prop.getProperty("grid.enabled")));
-        
+
         String[] ownerComponants = prop.getProperty("test.data.owner2.add").split(",");
         Owner owner = new Owner(ownerComponants[0],ownerComponants[1],ownerComponants[2],ownerComponants[3],ownerComponants[4]);
         setOwner(owner);
+
     }
-    
+
     /**
      * @return surname of user that should not exist.
      */
     public String getOwnerLastNameNotExist(){
         return ownerLastNameNotExist;
     }
-    
+
     /**
      * Set surname of user that should not exist.
      */
@@ -181,5 +198,5 @@ public class Configure {
 	public void setGridMode(boolean gridMode) {
 		this.gridMode = gridMode;
 	}
-    
+
 }
